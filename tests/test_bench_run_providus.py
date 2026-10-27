@@ -91,7 +91,7 @@ def test_a_failed_request_is_tried_again(pdf_path, fake_server):
     assert len(bodies) == 2
 
 
-def test_raises_after_three_failures_and_writes_nothing(pdf_path, fake_server):
+def test_raises_after_three_failures(pdf_path, fake_server):
     url, bodies = fake_server([(500, {}), (200, {"status": "error", "error": "boom"})])
     with pytest.raises(RuntimeError, match="failed 3 times"):
         run_providus(pdf_path, server_url=url, retry_wait=0)

@@ -6,6 +6,7 @@ shows how to start both servers.
 
 convert splits method options on ":", so a URL cannot be a method option. Set PROVIDUS_PARSE_URL instead
 (default http://127.0.0.1:8100).
+Run convert with --failfast: without it, convert writes an empty file for a page that failed.
 """
 
 import base64
@@ -48,7 +49,7 @@ def run_providus(
     attempts: int = 3,
     retry_wait: float = 5.0,
 ) -> str:
-    """Return the markdown of one page. Raise after `attempts` failed requests: convert then writes no file."""
+    """Return the markdown of one page. Raise after `attempts` failed requests: with --failfast, convert then writes no file."""
     url = (server_url or os.environ.get("PROVIDUS_PARSE_URL") or "http://127.0.0.1:8100").rstrip("/")
     body = _page_body(pdf_path, page_num, dpi)
     error: Exception | None = None
